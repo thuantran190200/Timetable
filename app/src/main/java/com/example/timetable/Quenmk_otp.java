@@ -1,4 +1,4 @@
-package com.example.timetable;
+    package com.example.timetable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +44,10 @@ public class Quenmk_otp extends AppCompatActivity {
         setContentView(R.layout.activity_quenmk__o_t_p);
 
         btn_xacminh = findViewById(R.id.xacminh_screen);
+
+        phoneNo = getIntent().getStringExtra("sodienthoai");
+
+        sendCode(phoneNo);
 
         btn_xacminh.setOnClickListener(new View.OnClickListener() {
             @Override

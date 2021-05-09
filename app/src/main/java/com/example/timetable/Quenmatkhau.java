@@ -43,7 +43,7 @@ public class Quenmatkhau extends AppCompatActivity {
         countryCodePicker = findViewById(R.id.coutry_phone);
 
 
-        /*btntieptuc = findViewById(R.id.tieptuc_screen);
+    /*    btntieptuc = findViewById(R.id.tieptuc_screen);
         btntieptuc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +61,7 @@ public class Quenmatkhau extends AppCompatActivity {
 
         //validate phone number
         //if(!validateFileds()){}
-        progresBar.setVisibility(View.VISIBLE);
+        //progresBar.setVisibility(View.VISIBLE);
 
         //get data from fields
         String _phoneNumber = sodienthoai.getEditText().getText().toString().trim();
@@ -71,25 +71,25 @@ public class Quenmatkhau extends AppCompatActivity {
         final String _cpPhoneNumber = "+" + countryCodePicker.getFullNumber() + _phoneNumber;
 
         //check weather user exists or not in database
-        Query checkUser = FirebaseDatabase.getInstance().getReference("User").child("sodienthoai").equalTo(_cpPhoneNumber);
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {//nằm kế bên @NonNull--- @org.jetbrains.annotations.NotNull
-                if(snapshot.exists()){
-                    sodienthoai.setError(null);
-                    sodienthoai.setErrorEnabled(false);
-                    Intent intent = new Intent(getApplicationContext(), Quenmk_otp.class);
-                    intent.putExtra("sodienthoai", _cpPhoneNumber);
-                    intent.putExtra("WhatToDo", "updateData");
-                    startActivity(intent);
-                    finish();
+            Query checkUser = FirebaseDatabase.getInstance().getReference("User").child("sodienthoai").equalTo(_cpPhoneNumber);
+            checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {//nằm kế bên @NonNull--- @org.jetbrains.annotations.NotNull
+                    if(snapshot.exists()){
+                        sodienthoai.setError(null);
+                        sodienthoai.setErrorEnabled(false);
+                        Intent intent = new Intent(getApplicationContext(), Quenmk_otp.class);
+                        intent.putExtra("sodienthoai", _cpPhoneNumber);
+                        intent.putExtra("WhatToDo", "updateData");
+                        startActivity(intent);
+                        finish();
 
-                    progresBar.setVisibility(View.GONE);
+                        //progresBar.setVisibility(View.GONE);
 
-                }else {
-                    progresBar.setVisibility(View.GONE);
-                    sodienthoai.setError("Số điện thoại chưa đăng ký");
-                    sodienthoai.requestFocus();
+                    }else {
+                        //progresBar.setVisibility(View.GONE);
+                        sodienthoai.setError("Số điện thoại chưa đăng ký");
+                        sodienthoai.requestFocus();
                 }
             }
 
