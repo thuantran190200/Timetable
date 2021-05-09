@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.timetable">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Timetable">
+        <activity android:name=".Them_cv_tkb"></activity>
+        <activity android:name=".Thoikhoabieu" />
+        <activity android:name=".Thongtincanhan" />
+        <activity android:name=".Giaodien_contrangchu" />
+        <activity android:name=".Giaodien_trangchu" />
+        <activity android:name="Admin.Admin_giaodien" />
+        <activity android:name=".Quenmk_thaydoithanhcong" />
+        <activity android:name=".Quenmatkhau_mkmoi" />
+        <activity android:name=".Quenmk_otp" />
+        <activity android:name=".Quenmatkhau_xacminh" />
+        <activity android:name=".Quenmatkhau" />
+        <activity android:name=".Dangky" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Dangnhap" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

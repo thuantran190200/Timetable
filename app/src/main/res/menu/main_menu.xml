@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_tkb"
+            android:title="Thời khóa biểu"
+            android:icon="@drawable/icon_calendar"/>
+        <item
+            android:id="@+id/nav_note"
+            android:title="Ghi chú"
+            android:icon="@drawable/icon_note2"/>
+        <item
+            android:id="@+id/nav_hoatdong"
+            android:title="Hoạt động"
+            android:icon="@drawable/icon_job"/>
+
+    </group>
+
+
+        <item
+            android:title="Profile">
+
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_login"
+                        android:title="Thông tin cá nhân"
+                        android:icon="@drawable/icon_tt1"/>
+                    <item
+                        android:id="@+id/nav_logout"
+                        android:title="Đổi mật khẩu"
+                        android:icon="@drawable/icon_key"/>
+
+                </group>
+            </menu>
+        </item>
+
+
+    <item android:title="Hỗ trợ">
+
+        <menu>
+            <item
+                android:id="@+id/nav_sp"
+                android:title="Hướng dẫn sử dụng"
+                android:icon="@drawable/icon_i"/>
+            <item
+                android:id="@+id/nav_share"
+                android:title="Chia sẻ"
+                android:icon="@drawable/icon_share"/>
+            <item
+                android:id="@+id/nav_rate"
+                android:title="Đánh giá"
+                android:icon="@drawable/icon_rate"/>
+            <item
+                android:id="@+id/nav_change"
+                android:title="Đăng xuất"
+                android:icon="@drawable/icon_logout"/>
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Quenmk_otp"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/close_screen"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:onClick="close_screen"
+            android:scrollbarSize="50dp"
+            android:src="@drawable/ic_close" />
+        <TextView
+            android:layout_width="310dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="25dp"
+            android:text="Nhập Mã Xác Nhận"
+            android:textSize="30dp"
+            android:fontFamily="@font/bungee"/>
+        <TextView
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="25dp"
+            android:text="Tin nhắn OTP gửi vào số điện thoại: "
+            android:textSize="17dp"
+            android:fontFamily="@font/muli_black"
+            />
+        <TextView
+            android:id="@+id/phone_opt"
+            android:layout_width="210dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="-30dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginBottom="10dp"
+            android:text="+8405255336"
+            android:textSize="30dp"
+            android:fontFamily="@font/bungee"/>
+        <com.chaos.view.PinView
+            android:id="@+id/code_otp"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="22dp"
+            app:itemCount="6"
+            app:itemWidth="50dp"
+            app:itemHeight="50dp"
+            app:lineColor="@color/white"
+            android:itemBackground="@color/Silver"
+            style="@style/PinWidget.PinView"
+            android:inputType="number"
+            android:cursorVisible="true"
+            app:cursorColor="@color/black"
+            app:hideLineWhenFilled="true"
+            app:itemRadius="5dp"/>
+
+        <Button
+            android:id="@+id/xacminh_screen"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/yellow"
+            android:text="Xác nhận mã xác minh"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+</ScrollView>

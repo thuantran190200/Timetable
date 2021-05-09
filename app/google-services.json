@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "893725843469",
+    "firebase_url": "https://timetable-ee30a-default-rtdb.firebaseio.com",
+    "project_id": "timetable-ee30a",
+    "storage_bucket": "timetable-ee30a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893725843469:android:3c2a08a6d3d684b1ed3544",
+        "android_client_info": {
+          "package_name": "com.example.timetable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893725843469-12il97mnqea3stghb154sdd5q9nbc948.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj15fU0aCnWomiMhKV2zL34MtXasJro6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893725843469-12il97mnqea3stghb154sdd5q9nbc948.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

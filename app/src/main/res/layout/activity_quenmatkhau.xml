@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Quenmatkhau"
+    android:background="@color/white"
+    android:padding="30dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/back_screen"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:onClick="back_screen"
+            android:src="@drawable/ic_keyboard_backspace"/>
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:padding="5dp"
+            android:src="@drawable/forgot_password" />
+
+
+        <TextView
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:text="Nhập số điện thoại"
+            android:textSize="25dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="-230dp"
+            android:fontFamily="@font/muli_black"
+            android:textColor="@color/black"
+            android:textAllCaps="true"/>
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/coutry_phone"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            app:ccpDialog_searchEditTextTint="@color/design_default_color_on_primary"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_showFlag="true"
+            app:ccp_showNameCode="true"
+            app:ccp_showFullName="true"
+            app:ccp_autoDetectLanguage="true"
+            android:layout_marginLeft="-320dp"
+            android:padding="5dp"
+            android:background="@color/Orange"
+            android:layout_marginTop="300dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txt_sdt"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginLeft="-320dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="2dp"
+            android:hint="Số điện thoại"
+            app:startIconDrawable="@drawable/ic_action_user"
+            app:startIconTint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            android:textColorHint="@color/black">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="320dp"
+                android:layout_height="60dp"
+                android:inputType="phone"
+                android:textColorHint="@color/black"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/tieptuc_screen"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="-320dp"
+            android:layout_marginTop="400dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/Yellow"
+            android:text="Tiếp tục"
+            android:textColor="@color/Black" />
+
+    </LinearLayout>
+
+</ScrollView>
