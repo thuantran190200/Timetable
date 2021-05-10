@@ -4,5 +4,10 @@
     <string name="s_ho_n_h_o_t_c_t_ng_ch_t_m_t">Sự hoàn hảo đạt được từng chút một,</string>
     <string name="n_c_n_b_n_tay_c_a_th_i_gian">nó cần bàn tay của thời gian</string>
     <string name="todo">TODO</string>
+    <string name="date">Ngày Bắt Đầu</string>
+    <string name="time">00:00</string>
+    <string name="date_end">Ngày kết thúc</string>
     <string name="h_t_n">Họ tên</string>
+    <string name="reminder">Nhắc nhở</string>
+
 </resources>
