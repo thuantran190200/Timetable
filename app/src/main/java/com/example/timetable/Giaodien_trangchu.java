@@ -10,11 +10,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Giaodien_trangchu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,6 +38,17 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     NavigationView navigationView;
     Toolbar toolbar;
     TextView fullname;
+    //thoikhoabieu
+    CalendarView mCalendarView;
+    TextView txtThangnNam;
+    private String pattern = "DD/MM/YY";
+    String dateInString = new SimpleDateFormat(pattern).format(new Date());
+    ImageButton imbPlus;
+    RecyclerView recyclerView;
+    DatabaseReference reference;
+    ArrayList<TimeTable> list = new ArrayList<>();
+    RecyclerViewTimeTable adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +58,47 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+        //tkb
+        mCalendarView = findViewById(R.id.mCalenderView);
+        imbPlus = findViewById(R.id.imbPlus);
+        txtThangnNam = findViewById(R.id.txtThangNam);
+        txtThangnNam.setText(dateInString);
 
+        //tkb calendar
+        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                list.clear();
+                String ngay ="";
+                String thang ="";
+                if(dayOfMonth < 10){
+                    ngay = "0" + dayOfMonth;
+                }else {
+                    ngay = String.valueOf(dayOfMonth);
+                }
+                if(month < 10){
+                    thang = "0" + (month+1);
+                }else {
+                    thang = String.valueOf(month+1);
+                }
+                String date = ngay + "/" + thang + "/" + year;
+                txtThangnNam.setText(date);
+                recyclerView = findViewById(R.id.recyclerView);
+                reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
+                GetDataFromFireBase();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Giaodien_trangchu.this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setHasFixedSize(true);
+            }
+        });
+        imbPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Giaodien_trangchu.this, activity_event.class);
+                activity_event.ischeck = false;
+                startActivity(intent);
+            }
+        });
         //fullname =findViewById(R.id.hoten_nguoidung);
         /*---------------------hiển thị tên người dùng--------------*/
         showUser();
@@ -94,5 +160,44 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
         String ho_ten = intent.getStringExtra("hoten");
 
         //fullname.setText(ho_ten);
+    }
+    //tkb timetable get data from firebase
+    private void  GetDataFromFireBase(){
+        String date = txtThangnNam.getText().toString().trim();
+        //luu y cho nay xem no lam gi
+        Query query = reference.orderByChild("date").equalTo(date);
+        //Query check_sdt =reference.orderByChild("sdt").equalTo(sdt);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
+                    /*if(){}*/
+
+                    if (snapshot.hasChildren()){
+                        String key = dataSnapshot.getKey();
+                        String title = snapshot.child(key).child("title").getValue(String.class);
+                        String location = snapshot.child(key).child("location").getValue(String.class);
+                        String description = snapshot.child(key).child("description").getValue(String.class);
+                        String dateFB = snapshot.child(key).child("date").getValue(String.class);
+                        String time = snapshot.child(key).child("time").getValue(String.class);
+                        String reminder = snapshot.child(key).child("reminder").getValue(String.class);
+                        String tietBD = snapshot.child(key).child("tietBD").getValue(String.class);
+                        String sotiethoc = snapshot.child(key).child("sotiethoc").getValue(String.class);
+                        String sdt = snapshot.child(key).child("sdt").getValue(String.class);
+                        TimeTable timeTable = new TimeTable(key,title,location,description,dateFB,time,reminder,tietBD,sotiethoc,sdt);
+                        list.add(timeTable);
+                    }
+                }
+                adapter = new RecyclerViewTimeTable(getApplicationContext(),list);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDatesetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
     }
 }

@@ -65,7 +65,6 @@ public class Sessionmanager {
         } else
             return false;
     }
-
     public void logoutUser() {
         editor.clear();
         editor.commit();

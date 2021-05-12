@@ -10,7 +10,6 @@
     tools:openDrawer="start"
     android:orientation="vertical">
 
-
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -44,9 +43,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <CalendarView
+            android:id="@+id/mCalenderView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="60dp"/>
+
+        <TextView
+            android:id="@+id/txtThangNam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ngày Tháng Năm"
+            android:layout_margin="15dp"
+            android:textSize="25dp"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageButton
+                android:id="@+id/imbPlus"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="15dp"
+                android:background="@drawable/add_icon"/>
+        </RelativeLayout>
     </LinearLayout>
 
 
