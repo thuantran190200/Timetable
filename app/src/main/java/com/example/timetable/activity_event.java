@@ -3,6 +3,7 @@ package com.example.timetable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
@@ -11,6 +12,8 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +23,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -29,11 +31,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-public class activity_event extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
+public class activity_event extends AppCompatActivity{
 
+    int t1hour,t1minute,t2hour,t2minute;
     EditText event_title,event_description,event_tietbd,event_sotiet,event_location;
     TextView event_date, event_date_end, event_time, event_time_end, event_reminder;
     Toolbar toolbar;
@@ -41,6 +46,8 @@ public class activity_event extends AppCompatActivity implements TimePickerDialo
     String selected ="Không nhắc nhở";
     DatabaseReference reference;
     String id, sdt;
+    //
+    DatePickerDialog.OnDateSetListener setListener;
     public static boolean isCheck = false;
 
     @Override
@@ -61,26 +68,125 @@ public class activity_event extends AppCompatActivity implements TimePickerDialo
         event_reminder = findViewById(R.id.event_reminder);
         toolbar = findViewById(R.id.toolbar);
 
+        //
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //
         setSupportActionBar(toolbar);
         ActionBar actionBar =getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
         loadData();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mCalendar.set(Calendar.YEAR, year);
-                mCalendar.set(Calendar.MONTH, month);
-                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDate();
-            }
-        };
+//        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                mCalendar.set(Calendar.YEAR, year);
+//                mCalendar.set(Calendar.MONTH, month);
+//                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateDate();
+//            }
+//        };
         event_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment timePicker = new DialogFragment();
-                timePicker.show(getSupportFragmentManager(), "Time Picker");
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity_event.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        String ngay ="";
+                        String thang ="";
+                        if(day < 10){
+                            ngay = "0" + day;
+                        }else {
+                            ngay = String.valueOf(day);
+                        }
+                        if(month < 10){
+                            thang = "0" + (month+1);
+                        }else {
+                            thang = String.valueOf(month+1);
+                        }
+                        String date = ngay + "/" + thang + "/" + year;
+
+                        event_date.setText(date);
+
+                    }
+                },year, month, day);
+                datePickerDialog.show();
+
+                /*new DatePickerDialog(activity_event.this, date, mCalendar
+                        .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                        mCalendar.get(Calendar.DAY_OF_MONTH)).show();*/
+            }
+        });
+        event_date_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity_event.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        String ngay ="";
+                        String thang ="";month =month+1;
+                        if(day < 10){
+                            ngay = "0" + day;
+                        }else {
+                            ngay = String.valueOf(day);
+                        }
+                        if(month < 10){
+                            thang = "0" + (month+1);
+                        }else {
+                            thang = String.valueOf(month+1);
+                        }
+                        String date = ngay + "/" + thang + "/" + year;
+                        event_date_end.setText(date);
+                    }
+                },year, month, day);
+                datePickerDialog.show();
+            }
+        });
+        event_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        activity_event.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                t1hour = hourOfDay;
+                                t1minute = minute;
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(0,0,0,t1hour,t1minute);
+                                event_time.setText(DateFormat.format("kk:mm",calendar));
+                            }
+                        },12,0,false
+                );
+                timePickerDialog.updateTime(t1hour,t1minute);
+                timePickerDialog.show();
+                //DialogFragment timePicker = new TimePickerFragment();
+                //timePicker.show(getSupportFragmentManager(), "Time Picker");
+            }
+        });
+        event_time_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        activity_event.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                t2hour = hourOfDay;
+                                t2minute = minute;
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(0,0,0,t2hour,t2minute);
+                                event_time_end.setText(DateFormat.format("kk:mm",calendar));
+                            }
+                        },12,0,false
+                );
+               timePickerDialog.updateTime(t2hour,t2minute);
+               timePickerDialog.show();
+                //DialogFragment timePickerend = new TimePickerFragmentEnd();
+                //timePickerend.show(getSupportFragmentManager(), "Time Picker end");
             }
         });
         event_reminder.setOnClickListener(new View.OnClickListener() {
@@ -117,25 +223,35 @@ public class activity_event extends AppCompatActivity implements TimePickerDialo
             if (!isCheck){
                 event_date.getText();
                 String key = reference.push().getKey();
-                TimeTable timeTable = new TimeTable(key, event_title.getText().toString(),event_location.getText().toString(), event_tietbd.getText().toString(),event_sotiet.getText().toString(), event_description.getText().toString(),event_date.getText().toString(),event_time.getText().toString(), event_date_end.getText().toString(),event_time_end.getText().toString()/*,Sessionmanager.KEY_SDT*/);
-                reference.child(key).setValue(timeTable);
-                this.finish();
-                Toast.makeText(activity_event.this,"Tạo thành công",Toast.LENGTH_SHORT).show();
-            }else {
-                    reference.child(id).child("title").setValue(event_title.getText().toString().trim());
-                    reference.child(id).child("location").setValue(event_location.getText().toString().trim());
-                    reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
-                    reference.child(id).child("sotiet").setValue(event_sotiet.getText().toString().trim());
-                    reference.child(id).child("description").setValue(event_description.getText().toString().trim());
-                    reference.child(id).child("date").setValue(event_date.getText().toString().trim());
-                    reference.child(id).child("time").setValue(event_time.getText().toString().trim());
-                    reference.child(id).child("date_end").setValue(event_date_end.getText().toString().trim());
-                    reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
-                    reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
-                    //reference.child(id).child("sdt").setValue(Sessionmanager.KEY_SDT.trim());
 
+                Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                if (sessionmanager.ckecklogin()){
+                    TimeTable timeTable = new TimeTable(key, event_title.getText().toString(),event_location.getText().toString(), event_tietbd.getText().toString(),
+                            event_sotiet.getText().toString(), event_description.getText().toString(),event_date.getText().toString(),event_time.getText().toString(),
+                            event_date_end.getText().toString(),event_time_end.getText().toString(),event_reminder.getText().toString(),sessionmanager.KEY_SDT);
+                    reference.child(key).setValue(timeTable);
                     this.finish();
-                    Toast.makeText(activity_event.this,"Đang lưu....",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_event.this,"Tạo thành công",Toast.LENGTH_SHORT).show();
+                }
+
+            }else {
+                    Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                    if (sessionmanager.ckecklogin()) {
+                        reference.child(id).child("title").setValue(event_title.getText().toString().trim());
+                        reference.child(id).child("location").setValue(event_location.getText().toString().trim());
+                        reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
+                        reference.child(id).child("sotiet").setValue(event_sotiet.getText().toString().trim());
+                        reference.child(id).child("description").setValue(event_description.getText().toString().trim());
+                        reference.child(id).child("date").setValue(event_date.getText().toString().trim());
+                        reference.child(id).child("time").setValue(event_time.getText().toString().trim());
+                        reference.child(id).child("date_end").setValue(event_date_end.getText().toString().trim());
+                        reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
+                        reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
+                        reference.child(id).child("sdt").setValue(Sessionmanager.KEY_SDT.trim());
+
+                        this.finish();
+                        Toast.makeText(activity_event.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
+                    }
             }
         }
         if (item.getItemId() ==R.id.trash){
@@ -147,13 +263,17 @@ public class activity_event extends AppCompatActivity implements TimePickerDialo
         String myFormat = "dd/MM/yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         event_date.setText(sdf.format(mCalendar.getTime()));
+        event_date_end.setText(sdf.format(mCalendar.getTime()));
     }
 
 
-    @Override
+   /* @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
         event_time.setText(hourOfDay + ":" + minute);
-    }
+        event_time_end.setText(hourOfDay + ":" + minute);
+    }*/
+
+
 
     private void loadData(){
         if (isCheck==true){

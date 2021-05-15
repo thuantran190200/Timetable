@@ -40,7 +40,6 @@ public class Sessionmanager {
         editor.putString(KEY_TENDANGNHAP, tendangnhap);
 
 
-
         editor.commit();
 
     }

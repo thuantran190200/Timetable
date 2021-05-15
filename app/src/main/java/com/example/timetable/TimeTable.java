@@ -19,10 +19,6 @@ public class TimeTable {
         this.location = location;
     }
 
-    public String getTietdb(){ return tietbd;}
-
-    public void setTietbd(String tietbd){this.tietbd = tietbd;}
-
     public String getSotiet(){ return sotiet;}
 
     public void setSotiet(String sotiet){this.sotiet = sotiet;}
@@ -94,7 +90,26 @@ public class TimeTable {
     private String date_end;
     private String time_end;
 
-   /* public String getSdt() {
+    public String getTietbd() {
+        return tietbd;
+    }
+
+    public String getDate_end() {
+        return date_end;
+    }
+
+    public void setDate_end(String date_end) {
+        this.date_end = date_end;
+    }
+
+    public String getTime_end() {
+        return time_end;
+    }
+
+    public void setTime_end(String time_end) {
+        this.time_end = time_end;
+    }
+/* public String getSdt() {
         return sdt;
     }
 

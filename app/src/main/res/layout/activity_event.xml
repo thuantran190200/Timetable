@@ -73,7 +73,7 @@
             android:layout_toRightOf="@id/event_tietbd"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Số tiết học" />
+            android:hint="Số tiết học" />
 
         <EditText
             android:id="@+id/event_description"

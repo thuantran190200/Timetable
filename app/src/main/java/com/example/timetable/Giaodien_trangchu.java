@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +42,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     //thoikhoabieu
     CalendarView mCalendarView;
     TextView txtThangnNam;
-    private String pattern = "DD/MM/YY";
+    private String pattern = "dd/MM/yyyy";
     String dateInString = new SimpleDateFormat(pattern).format(new Date());
     ImageButton imbPlus;
     RecyclerView recyclerView;
@@ -82,6 +83,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                     thang = String.valueOf(month+1);
                 }
                 String date = ngay + "/" + thang + "/" + year;
+
                 txtThangnNam.setText(date);
                 recyclerView = findViewById(R.id.recyclerView);
                 reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
@@ -95,7 +97,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Giaodien_trangchu.this, activity_event.class);
-                activity_event.ischeck = false;
+                activity_event.isCheck = false;
                 startActivity(intent);
             }
         });
@@ -146,8 +148,8 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
             case R.id.nav_change:
-                //Sessionmanager.logoutUser();
-                finish();
+                Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                sessionmanager.logoutUser();
                 break;
 
 
@@ -173,7 +175,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
                     /*if(){}*/
-
+                    Log.d("hihi", "onDataChange: qweqwe");
                     if (snapshot.hasChildren()){
                         String key = dataSnapshot.getKey();
                         String title = snapshot.child(key).child("title").getValue(String.class);
@@ -181,23 +183,25 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                         String description = snapshot.child(key).child("description").getValue(String.class);
                         String dateFB = snapshot.child(key).child("date").getValue(String.class);
                         String time = snapshot.child(key).child("time").getValue(String.class);
+                        String date_end = snapshot.child(key).child("date_end").getValue(String.class);
+                        String time_end = snapshot.child(key).child("time_end").getValue(String.class);
                         String reminder = snapshot.child(key).child("reminder").getValue(String.class);
                         String tietBD = snapshot.child(key).child("tietBD").getValue(String.class);
                         String sotiethoc = snapshot.child(key).child("sotiethoc").getValue(String.class);
                         String sdt = snapshot.child(key).child("sdt").getValue(String.class);
-                        TimeTable timeTable = new TimeTable(key,title,location,description,dateFB,time,reminder,tietBD,sotiethoc,sdt);
+                        TimeTable timeTable = new TimeTable(key, title, location, dateFB, time,date_end,time_end,reminder,tietBD,sotiethoc,description,sdt);
                         list.add(timeTable);
                     }
                 }
                 adapter = new RecyclerViewTimeTable(getApplicationContext(),list);
                 recyclerView.setAdapter(adapter);
-                adapter.notifyDatesetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
     }
 }
