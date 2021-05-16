@@ -36,14 +36,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-public class activity_event extends AppCompatActivity{
+public class activity_event extends AppCompatActivity {
 
-    int t1hour,t1minute,t2hour,t2minute;
-    EditText event_title,event_description,event_tietbd,event_sotiet,event_location;
+    int t1hour, t1minute, t2hour, t2minute;
+    EditText event_title, event_description, event_tietbd, event_sotiet, event_location;
     TextView event_date, event_date_end, event_time, event_time_end, event_reminder;
     Toolbar toolbar;
     final Calendar mCalendar = Calendar.getInstance();
-    String selected ="Không nhắc nhở";
+    String selected = "Không nhắc nhở";
     DatabaseReference reference;
     String id, sdt;
     //
@@ -75,7 +75,7 @@ public class activity_event extends AppCompatActivity{
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         //
         setSupportActionBar(toolbar);
-        ActionBar actionBar =getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
@@ -95,29 +95,25 @@ public class activity_event extends AppCompatActivity{
                 DatePickerDialog datePickerDialog = new DatePickerDialog(activity_event.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String ngay ="";
-                        String thang ="";
-                        if(day < 10){
+                        String ngay = "";
+                        String thang = "";
+                        if (day < 10) {
                             ngay = "0" + day;
-                        }else {
+                        } else {
                             ngay = String.valueOf(day);
                         }
-                        if(month < 10){
-                            thang = "0" + (month+1);
-                        }else {
-                            thang = String.valueOf(month+1);
+                        if (month < 10) {
+                            thang = "0" + (month + 1);
+                        } else {
+                            thang = String.valueOf(month + 1);
                         }
                         String date = ngay + "/" + thang + "/" + year;
 
                         event_date.setText(date);
 
                     }
-                },year, month, day);
+                }, year, month, day);
                 datePickerDialog.show();
-
-                /*new DatePickerDialog(activity_event.this, date, mCalendar
-                        .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
-                        mCalendar.get(Calendar.DAY_OF_MONTH)).show();*/
             }
         });
         event_date_end.setOnClickListener(new View.OnClickListener() {
@@ -126,22 +122,23 @@ public class activity_event extends AppCompatActivity{
                 DatePickerDialog datePickerDialog = new DatePickerDialog(activity_event.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String ngay ="";
-                        String thang ="";month =month+1;
-                        if(day < 10){
+                        String ngay = "";
+                        String thang = "";
+                        month = month + 1;
+                        if (day < 10) {
                             ngay = "0" + day;
-                        }else {
+                        } else {
                             ngay = String.valueOf(day);
                         }
-                        if(month < 10){
-                            thang = "0" + (month+1);
-                        }else {
-                            thang = String.valueOf(month+1);
+                        if (month < 10) {
+                            thang = "0" + (month + 1);
+                        } else {
+                            thang = String.valueOf(month + 1);
                         }
                         String date = ngay + "/" + thang + "/" + year;
                         event_date_end.setText(date);
                     }
-                },year, month, day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -156,15 +153,13 @@ public class activity_event extends AppCompatActivity{
                                 t1hour = hourOfDay;
                                 t1minute = minute;
                                 Calendar calendar = Calendar.getInstance();
-                                calendar.set(0,0,0,t1hour,t1minute);
-                                event_time.setText(DateFormat.format("kk:mm",calendar));
+                                calendar.set(0, 0, 0, t1hour, t1minute);
+                                event_time.setText(DateFormat.format("kk:mm", calendar));
                             }
-                        },12,0,false
+                        }, 12, 0, false
                 );
-                timePickerDialog.updateTime(t1hour,t1minute);
+                timePickerDialog.updateTime(t1hour, t1minute);
                 timePickerDialog.show();
-                //DialogFragment timePicker = new TimePickerFragment();
-                //timePicker.show(getSupportFragmentManager(), "Time Picker");
             }
         });
         event_time_end.setOnClickListener(new View.OnClickListener() {
@@ -178,13 +173,13 @@ public class activity_event extends AppCompatActivity{
                                 t2hour = hourOfDay;
                                 t2minute = minute;
                                 Calendar calendar = Calendar.getInstance();
-                                calendar.set(0,0,0,t2hour,t2minute);
-                                event_time_end.setText(DateFormat.format("kk:mm",calendar));
+                                calendar.set(0, 0, 0, t2hour, t2minute);
+                                event_time_end.setText(DateFormat.format("kk:mm", calendar));
                             }
-                        },12,0,false
+                        }, 12, 0, false
                 );
-               timePickerDialog.updateTime(t2hour,t2minute);
-               timePickerDialog.show();
+                timePickerDialog.updateTime(t2hour, t2minute);
+                timePickerDialog.show();
                 //DialogFragment timePickerend = new TimePickerFragmentEnd();
                 //timePickerend.show(getSupportFragmentManager(), "Time Picker end");
             }
@@ -193,7 +188,7 @@ public class activity_event extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(activity_event.this);
-                final String [] options = {"Không nhắc nhở","Khi bắt đầu","Nhắc nhở trước 5 phút","Nhắc nhở trước 15 phút", "Nhắc nhở trước 30 phút", "Nhắc nhở trước 1 giờ"};
+                final String[] options = {"Không nhắc nhở", "Khi bắt đầu", "Nhắc nhở trước 5 phút", "Nhắc nhở trước 15 phút", "Nhắc nhở trước 30 phút", "Nhắc nhở trước 1 giờ"};
                 mBuilder.setTitle("Vui lòng chọn");
                 mBuilder.setSingleChoiceItems(options, 0, new DialogInterface.OnClickListener() {
                     @Override
@@ -208,76 +203,68 @@ public class activity_event extends AppCompatActivity{
             }
         });
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        if(isCheck){
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (isCheck) {
             getMenuInflater().inflate(R.menu.custom_menu_trash, menu);
-        }else {
+        } else {
             getMenuInflater().inflate(R.menu.custom_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        if(item.getItemId() == R.id.check){
-            if (!isCheck){
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.check) {
+            if (!isCheck) {
                 event_date.getText();
                 String key = reference.push().getKey();
+                //Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                TimeTable timeTable = new TimeTable(key, event_title.getText().toString(), event_location.getText().toString(), event_tietbd.getText().toString(),
+                        event_sotiet.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(),
+                        event_date_end.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(),MainActivity.sdt);
+                reference.child(key).setValue(timeTable);
+                this.finish();
+                Toast.makeText(activity_event.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
 
+
+            } else {
                 Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                if (sessionmanager.ckecklogin()){
-                    TimeTable timeTable = new TimeTable(key, event_title.getText().toString(),event_location.getText().toString(), event_tietbd.getText().toString(),
-                            event_sotiet.getText().toString(), event_description.getText().toString(),event_date.getText().toString(),event_time.getText().toString(),
-                            event_date_end.getText().toString(),event_time_end.getText().toString(),event_reminder.getText().toString(),sessionmanager.KEY_SDT);
-                    reference.child(key).setValue(timeTable);
+                if (sessionmanager.ckecklogin()) {
+                    reference.child(id).child("title").setValue(event_title.getText().toString().trim());
+                    reference.child(id).child("location").setValue(event_location.getText().toString().trim());
+                    reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
+                    reference.child(id).child("sotiet").setValue(event_sotiet.getText().toString().trim());
+                    reference.child(id).child("description").setValue(event_description.getText().toString().trim());
+                    reference.child(id).child("date").setValue(event_date.getText().toString().trim());
+                    reference.child(id).child("time").setValue(event_time.getText().toString().trim());
+                    reference.child(id).child("date_end").setValue(event_date_end.getText().toString().trim());
+                    reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
+                    reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
+                    reference.child(id).child("sdt").setValue(MainActivity.sdt);
+
                     this.finish();
-                    Toast.makeText(activity_event.this,"Tạo thành công",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_event.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
                 }
-
-            }else {
-                    Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                    if (sessionmanager.ckecklogin()) {
-                        reference.child(id).child("title").setValue(event_title.getText().toString().trim());
-                        reference.child(id).child("location").setValue(event_location.getText().toString().trim());
-                        reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
-                        reference.child(id).child("sotiet").setValue(event_sotiet.getText().toString().trim());
-                        reference.child(id).child("description").setValue(event_description.getText().toString().trim());
-                        reference.child(id).child("date").setValue(event_date.getText().toString().trim());
-                        reference.child(id).child("time").setValue(event_time.getText().toString().trim());
-                        reference.child(id).child("date_end").setValue(event_date_end.getText().toString().trim());
-                        reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
-                        reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
-                        reference.child(id).child("sdt").setValue(Sessionmanager.KEY_SDT.trim());
-
-                        this.finish();
-                        Toast.makeText(activity_event.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
-                    }
             }
         }
-        if (item.getItemId() ==R.id.trash){
+        if (item.getItemId() == R.id.trash) {
 
         }
         return super.onOptionsItemSelected(item);
     }
-    private void updateDate(){
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        event_date.setText(sdf.format(mCalendar.getTime()));
-        event_date_end.setText(sdf.format(mCalendar.getTime()));
-    }
+//    private void updateDate(){
+//        String myFormat = "dd/MM/yyyy";
+//        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//        event_date.setText(sdf.format(mCalendar.getTime()));
+//        event_date_end.setText(sdf.format(mCalendar.getTime()));
+//    }
 
 
-   /* @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
-        event_time.setText(hourOfDay + ":" + minute);
-        event_time_end.setText(hourOfDay + ":" + minute);
-    }*/
-
-
-
-    private void loadData(){
-        if (isCheck==true){
-            Intent intent =getIntent();
+    private void loadData() {
+        if (isCheck == true) {
+            Intent intent = getIntent();
             id = intent.getStringExtra("id");
             event_title.setText(intent.getStringExtra("title"));
             event_location.setText(intent.getStringExtra("location"));

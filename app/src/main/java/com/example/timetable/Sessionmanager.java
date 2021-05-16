@@ -15,6 +15,7 @@ public class Sessionmanager {
     public static final String KEY_REMEMBER_ME = "rememberMe";
 
     private static final String IS_LOGIN = "IsLoginUser";
+    private static  final String IS_LOGOUT = "IslogoutUser";
 
     public static final String KEY_EMAIL = "email";
     public static final String KEY_HOTEN = "hoten";

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/event_item_holder"
+    android:paddingBottom="12dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="12dp"
+    android:paddingRight="16dp"
+    android:layout_marginLeft="10dp">
+
+    <ImageView
+        android:id="@+id/event_item_color_bar"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/event_item_time"
+        android:layout_alignTop="@+id/event_item_time"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/even_list_color_bar"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        android:layout_marginRight="8dp"/>
+
+    <TextView
+        android:id="@+id/event_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/event_item_color_bar"
+        android:textSize="17dp"
+        android:text="12:00"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/event_item_color_bar"/>
+
+    <TextView
+        android:id="@+id/event_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@id/event_item_time"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingEnd="16dp"
+        android:textSize="17dp"
+        android:text="Tên môn học"
+        android:layout_toRightOf="@id/event_item_time"
+        android:paddingRight="16dp"
+        android:layout_marginLeft="16dp"/>
+
+    <ImageView
+        android:id="@+id/event_item_color_bar2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@+id/event_item_time_end"
+        android:layout_alignBottom="@+id/event_item_time_end"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="-7dp"
+        android:background="@drawable/even_list_color_bar"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp" />
+    <TextView
+        android:id="@+id/event_item_time_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/event_item_color_bar2"
+        android:layout_marginTop="30dp"
+        android:textSize="17dp"
+        android:text="12:00"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/event_item_color_bar2"/>
+
+    <TextView
+        android:id="@+id/event_item_title_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@id/event_item_time_end"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingEnd="16dp"
+        android:textSize="17dp"
+        android:text="Tên môn học"
+        android:layout_toRightOf="@id/event_item_time_end"
+        android:paddingRight="16dp"
+        android:layout_marginLeft="16dp"/>
+
+
+</RelativeLayout>

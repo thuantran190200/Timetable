@@ -87,6 +87,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 txtThangnNam.setText(date);
                 recyclerView = findViewById(R.id.recyclerView);
                 reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
+                //đặt if xét điều kiện tài khoản ở đây
                 GetDataFromFireBase();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Giaodien_trangchu.this);
                 recyclerView.setLayoutManager(linearLayoutManager);
@@ -147,9 +148,14 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 Intent intent = new Intent(Giaodien_trangchu.this, Thongtincanhan.class);
                 startActivity(intent);
                 break;
+            case R.id.lichsuthemtkb:
+                Intent intent2 = new Intent(Giaodien_trangchu.this, Lichsu_TKB.class);
+                startActivity(intent2);
+                break;
             case R.id.nav_change:
                 Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
                 sessionmanager.logoutUser();
+                finish();
                 break;
 
 
@@ -175,7 +181,6 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
                     /*if(){}*/
-                    Log.d("hihi", "onDataChange: qweqwe");
                     if (snapshot.hasChildren()){
                         String key = dataSnapshot.getKey();
                         String title = snapshot.child(key).child("title").getValue(String.class);

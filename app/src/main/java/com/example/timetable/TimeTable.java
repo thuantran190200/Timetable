@@ -51,6 +51,14 @@ public class TimeTable {
         return reminder;
     }
 
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
     public void setReminder(String reminder) {
         this.reminder = reminder;
     }
@@ -68,7 +76,7 @@ public class TimeTable {
         this.date_end = date_end;
         this.time_end = time_end;
         this.reminder = reminder;
-        //this.sdt = sdt;
+        this.sdt = sdt;
     }
     public TimeTable(){}
 
@@ -89,6 +97,7 @@ public class TimeTable {
     private String time;
     private String date_end;
     private String time_end;
+    private String sdt;
 
     public String getTietbd() {
         return tietbd;
@@ -96,6 +105,10 @@ public class TimeTable {
 
     public String getDate_end() {
         return date_end;
+    }
+
+    public void setTietbd(String tietbd) {
+        this.tietbd = tietbd;
     }
 
     public void setDate_end(String date_end) {

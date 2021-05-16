@@ -15,7 +15,10 @@
             android:id="@+id/nav_hoatdong"
             android:title="Hoạt động"
             android:icon="@drawable/icon_job"/>
-
+        <item
+            android:id="@+id/lichsuthemtkb"
+            android:title="Lịch sử thêm TKB"
+            android:icon="@drawable/add_icon"/>
     </group>
 
 

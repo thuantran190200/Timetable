@@ -118,57 +118,56 @@ public class Dangnhap extends AppCompatActivity {
         checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if(snapshot.exists()){
-
-                    username.setError(null);
-                    username.setErrorEnabled(false);
-
-
-                    String passwordFromDB = snapshot.child(userEnteredUsername).child("matkhau").getValue(String.class);
-
-                    if(userEnteredPassword.equals(passwordFromDB)){
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (snapshot.exists()) {
 
                         username.setError(null);
                         username.setErrorEnabled(false);
+                        String key = ds.getKey();
+                        String passwordFromDB = snapshot.child(key).child("matkhau").getValue(String.class);
 
-                        //Intent intent = new Intent(Dangnhap.this, Giaodien_trangchu.class);
-                        //startActivity(intent);
+                        if (userEnteredPassword.equals(passwordFromDB)) {
 
-                        String emailFromDB = snapshot.child(userEnteredUsername).child("email").getValue(String.class);
-                        String hotenFromDB = snapshot.child(userEnteredUsername).child("hoten").getValue(String.class);
-                        String matkhauFromDB = snapshot.child(userEnteredUsername).child("matkhau").getValue(String.class);
-                        String sdtFromDB = snapshot.child(userEnteredUsername).child("sodienthoai").getValue(String.class);
-                        String taikhoanFromDB = snapshot.child(userEnteredUsername).child("tendangnhap").getValue(String.class);
+                            username.setError(null);
+                            username.setErrorEnabled(false);
 
-                        String diachiFromDB = snapshot.child(userEnteredUsername).child("diachi").getValue(String.class);
+                            //Intent intent = new Intent(Dangnhap.this, Giaodien_trangchu.class);
+                            //startActivity(intent);
 
-                        //Create Database Store
-                        Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                        sessionmanager.createLoginSession(hotenFromDB, emailFromDB, sdtFromDB,taikhoanFromDB);
+                            String emailFromDB = snapshot.child(key).child("email").getValue(String.class);
+                            String hotenFromDB = snapshot.child(key).child("hoten").getValue(String.class);
+                            String matkhauFromDB = snapshot.child(key).child("matkhau").getValue(String.class);
+                            String sdtFromDB = snapshot.child(key).child("sodienthoai").getValue(String.class);
+                            String taikhoanFromDB = snapshot.child(key).child("tendangnhap").getValue(String.class);
 
-                        startActivity(new Intent(getApplicationContext(), Giaodien_trangchu.class));
+                            String diachiFromDB = snapshot.child(key).child("diachi").getValue(String.class);
+                            MainActivity.sdt = sdtFromDB;
+                            //Create Database Store
+                            Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                            sessionmanager.createLoginSession(hotenFromDB, taikhoanFromDB, emailFromDB, sdtFromDB);
+
+                            startActivity(new Intent(getApplicationContext(), Giaodien_trangchu.class));
 
 
                         /*if(Intent intent = new Intent(Giaodien_trangchu.this, Thongtincanhan.class)){
 
                         }*/
-                        Intent intent1 = new Intent(getApplicationContext(), Thongtincanhan.class);
-                        intent1.putExtra("tendangnhap",taikhoanFromDB);
-                        intent1.putExtra("hoten", hotenFromDB);
-                        intent1.putExtra("email", emailFromDB);
-                        intent1.putExtra("sodienthoai", sdtFromDB);
-                        //intent1.putExtra("diachi", diachiFromDB);
-                        //startActivity(intent1);
+                            Intent intent1 = new Intent(getApplicationContext(), Thongtincanhan.class);
+                            intent1.putExtra("tendangnhap", taikhoanFromDB);
+                            intent1.putExtra("hoten", hotenFromDB);
+                            intent1.putExtra("email", emailFromDB);
+                            intent1.putExtra("sodienthoai", sdtFromDB);
+                            //intent1.putExtra("diachi", diachiFromDB);
+                            //startActivity(intent1);
 
-                    }else {
-                        password.setError("Sai mật khẩu");
-                        password.requestFocus();
+                        } else {
+                            password.setError("Sai mật khẩu");
+                            password.requestFocus();
+                        }
+                    } else {
+                        username.setError("Tài khoảng không tồn tại");
+                        username.requestFocus();
                     }
-                }
-                else {
-                    username.setError("Tài khoảng không tồn tại");
-                    username.requestFocus();
                 }
             }
 
@@ -177,6 +176,7 @@ public class Dangnhap extends AppCompatActivity {
 
             }
         });
+
     }
 
 

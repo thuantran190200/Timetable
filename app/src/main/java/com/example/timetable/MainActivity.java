@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.time.Instant;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static String sdt;
     private static int SPLASH_SCREEN = 4000;
     //variables
     Animation topAnim, bottomAnim;
