@@ -32,6 +32,10 @@
                         android:title="Thông tin cá nhân"
                         android:icon="@drawable/icon_tt1"/>
                     <item
+                        android:id="@+id/doimk"
+                        android:title="Đổi mật khẩu"
+                        android:icon="@drawable/add_icon"/>
+                    <item
                         android:id="@+id/nav_logout"
                         android:title="Đổi mật khẩu"
                         android:icon="@drawable/icon_key"/>

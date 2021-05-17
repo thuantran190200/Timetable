@@ -142,6 +142,11 @@ public class Dangnhap extends AppCompatActivity {
 
                             String diachiFromDB = snapshot.child(key).child("diachi").getValue(String.class);
                             MainActivity.sdt = sdtFromDB;
+                            MainActivity.hoten = hotenFromDB;
+                            MainActivity.email = emailFromDB;
+                            MainActivity.diachi = diachiFromDB;
+                            MainActivity.taikhoan = taikhoanFromDB;
+                            MainActivity.matkhau = matkhauFromDB;
                             //Create Database Store
                             Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
                             sessionmanager.createLoginSession(hotenFromDB, taikhoanFromDB, emailFromDB, sdtFromDB);

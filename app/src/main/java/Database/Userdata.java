@@ -1,17 +1,26 @@
 package Database;
 
 public class Userdata {
-    String hoten, tendangnhap, email, sodienthoai, matkhau;
+    String hoten, tendangnhap, email, sodienthoai, matkhau, diachi;
 
     public Userdata() {
     }
 
-    public Userdata(String hoten, String tendangnhap, String email, String sodienthoai, String matkhau) {
+    public String getDiachi() {
+        return diachi;
+    }
+
+    public void setDiachi(String diachi) {
+        this.diachi = diachi;
+    }
+
+    public Userdata(String hoten, String tendangnhap, String email, String sodienthoai, String matkhau, String diachi) {
         this.hoten = hoten;
         this.tendangnhap = tendangnhap;
         this.email = email;
         this.sodienthoai = sodienthoai;
         this.matkhau = matkhau;
+        this.diachi = diachi;
     }
 
     public String getHoten() {

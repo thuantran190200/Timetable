@@ -88,7 +88,7 @@ public class Dangky extends AppCompatActivity {
                 }*/
 
 
-                Userdata userdata = new Userdata(ho_ten, ten_dangnhap, mail, sodienthoai, mat_khau);
+                Userdata userdata = new Userdata(ho_ten, ten_dangnhap, mail, sodienthoai, mat_khau, "");
 
                 reference.child(sodienthoai).setValue(userdata);
 

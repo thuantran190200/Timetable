@@ -213,6 +213,7 @@
                 android:backgroundTint="@color/Orange"
                 android:fontFamily="@font/bungee"
                 android:text="Cập nhật"
+                android:onClick="capnhap"
                 android:textColor="@color/Black" />
 
         </LinearLayout>

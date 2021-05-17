@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 //import android.widget.Toolbar;
@@ -49,6 +50,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     DatabaseReference reference;
     ArrayList<TimeTable> list = new ArrayList<>();
     RecyclerViewTimeTable adapter;
+    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +88,14 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
 
                 txtThangnNam.setText(date);
                 recyclerView = findViewById(R.id.recyclerView);
+                gridView = findViewById(R.id.gridview);
                 reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
                 //đặt if xét điều kiện tài khoản ở đây
                 GetDataFromFireBase();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Giaodien_trangchu.this);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setHasFixedSize(true);
+               recyclerView.setLayoutManager(linearLayoutManager);
+
+               recyclerView.setHasFixedSize(true);
             }
         });
         imbPlus.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +161,10 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 sessionmanager.logoutUser();
                 finish();
                 break;
-
+            case R.id.doimk:
+                Intent intent3 = new Intent(Giaodien_trangchu.this, Doimatkhau.class);
+                startActivity(intent3);
+                break;
 
         }
 
@@ -172,40 +179,46 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     //tkb timetable get data from firebase
     private void  GetDataFromFireBase(){
         String date = txtThangnNam.getText().toString().trim();
-        //luu y cho nay xem no lam gi
+        //String sdtdn = MainActivity.sdt.toString().trim();
         Query query = reference.orderByChild("date").equalTo(date);
-        //Query check_sdt =reference.orderByChild("sdt").equalTo(sdt);
+
+
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    //String TimeTable = dataSnapshot.getKey();
+                    String key = dataSnapshot.getKey();
+                    String sdt = snapshot.child(key).child("sdt").getValue(String.class);
                     //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
-                    /*if(){}*/
-                    if (snapshot.hasChildren()){
-                        String key = dataSnapshot.getKey();
+                   // if (sdtdn == sdt) {
+
+                    if (snapshot.hasChildren()) {
+                        //String key = dataSnapshot.getKey();
                         String title = snapshot.child(key).child("title").getValue(String.class);
                         String location = snapshot.child(key).child("location").getValue(String.class);
+                        String tietBD = snapshot.child(key).child("tietbd").getValue(String.class);
+                        String sotiethoc = snapshot.child(key).child("sotiet").getValue(String.class);
                         String description = snapshot.child(key).child("description").getValue(String.class);
                         String dateFB = snapshot.child(key).child("date").getValue(String.class);
                         String time = snapshot.child(key).child("time").getValue(String.class);
                         String date_end = snapshot.child(key).child("date_end").getValue(String.class);
                         String time_end = snapshot.child(key).child("time_end").getValue(String.class);
                         String reminder = snapshot.child(key).child("reminder").getValue(String.class);
-                        String tietBD = snapshot.child(key).child("tietBD").getValue(String.class);
-                        String sotiethoc = snapshot.child(key).child("sotiethoc").getValue(String.class);
-                        String sdt = snapshot.child(key).child("sdt").getValue(String.class);
-                        TimeTable timeTable = new TimeTable(key, title, location, dateFB, time,date_end,time_end,reminder,tietBD,sotiethoc,description,sdt);
+
+                        //String sdt = snapshot.child(key).child("sdt").getValue(String.class);
+                        TimeTable timeTable = new TimeTable(key, title, location, tietBD, sotiethoc, description, dateFB, time, date_end, time_end, reminder, sdt);
                         list.add(timeTable);
                     }
+                    //}
                 }
                 adapter = new RecyclerViewTimeTable(getApplicationContext(),list);
-                recyclerView.setAdapter(adapter);
+               recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

@@ -124,7 +124,6 @@ public class activity_event extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String ngay = "";
                         String thang = "";
-                        month = month + 1;
                         if (day < 10) {
                             ngay = "0" + day;
                         } else {
@@ -216,6 +215,7 @@ public class activity_event extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //thêm sự kiện môn vào
         if (item.getItemId() == R.id.check) {
             if (!isCheck) {
                 event_date.getText();
@@ -230,8 +230,6 @@ public class activity_event extends AppCompatActivity {
 
 
             } else {
-                Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                if (sessionmanager.ckecklogin()) {
                     reference.child(id).child("title").setValue(event_title.getText().toString().trim());
                     reference.child(id).child("location").setValue(event_location.getText().toString().trim());
                     reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
@@ -246,9 +244,9 @@ public class activity_event extends AppCompatActivity {
 
                     this.finish();
                     Toast.makeText(activity_event.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
-                }
             }
         }
+        //xóa 1 sự kiện môn đã thêm vào
         if (item.getItemId() == R.id.trash) {
 
         }

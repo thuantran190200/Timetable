@@ -15,7 +15,14 @@ import android.widget.TextView;
 import java.time.Instant;
 
 public class MainActivity extends AppCompatActivity {
+    //sử dụng biến toàn cục
+    public static String hoten;
     public static String sdt;
+    public  static String email;
+    public  static String diachi;
+    public  static String taikhoan;
+    public static  String matkhau;
+    //-------------
     private static int SPLASH_SCREEN = 4000;
     //variables
     Animation topAnim, bottomAnim;

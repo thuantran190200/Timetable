@@ -38,8 +38,12 @@ public class RecyclerViewTimeTable extends RecyclerView.Adapter<RecyclerViewTime
                 intent.putExtra("title",list.get(position).getTitle());
                 intent.putExtra("location",list.get(position).getLocation());
                 intent.putExtra("description",list.get(position).getDescription());
+                intent.putExtra("tietbd",list.get(position).getTietbd());
+                intent.putExtra("sotiet",list.get(position).getSotiet());
                 intent.putExtra("date",list.get(position).getDate());
                 intent.putExtra("time",list.get(position).getTime());
+                intent.putExtra("date_end",list.get(position).getDate_end());
+                intent.putExtra("time_end",list.get(position).getTime_end());
                 intent.putExtra("reminder",list.get(position).getReminder());
                 activity_event.isCheck = true;
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
