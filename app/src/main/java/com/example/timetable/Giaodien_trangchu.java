@@ -72,30 +72,27 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 list.clear();
-                String ngay ="";
-                String thang ="";
-                if(dayOfMonth < 10){
+                String ngay = "";
+                String thang = "";
+                if (dayOfMonth < 10) {
                     ngay = "0" + dayOfMonth;
-                }else {
+                } else {
                     ngay = String.valueOf(dayOfMonth);
                 }
-                if(month < 10){
-                    thang = "0" + (month+1);
-                }else {
-                    thang = String.valueOf(month+1);
+                if (month < 10) {
+                    thang = "0" + (month + 1);
+                } else {
+                    thang = String.valueOf(month + 1);
                 }
                 String date = ngay + "/" + thang + "/" + year;
 
                 txtThangnNam.setText(date);
-                recyclerView = findViewById(R.id.recyclerView);
+
                 gridView = findViewById(R.id.gridview);
                 reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
                 //đặt if xét điều kiện tài khoản ở đây
                 GetDataFromFireBase();
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Giaodien_trangchu.this);
-               recyclerView.setLayoutManager(linearLayoutManager);
 
-               recyclerView.setHasFixedSize(true);
             }
         });
         imbPlus.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +118,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
         menu.findItem(R.id.nav_login).setVisible(false);*/
 
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.s_ho_n_h_o_t_c_t_ng_ch_t_m_t, R.string.n_c_n_b_n_tay_c_a_th_i_gian);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.s_ho_n_h_o_t_c_t_ng_ch_t_m_t, R.string.n_c_n_b_n_tay_c_a_th_i_gian);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -131,11 +128,9 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -144,7 +139,7 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         //
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_tkb:
                 onBackPressed();
                 break;
@@ -159,9 +154,11 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
             case R.id.nav_change:
                 Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
                 sessionmanager.logoutUser();
+                Intent intent4 = new Intent(Giaodien_trangchu.this, Dangnhap.class);
+                startActivity(intent4);
                 finish();
                 break;
-            case R.id.doimk:
+            case R.id.nav_changepassword:
                 Intent intent3 = new Intent(Giaodien_trangchu.this, Doimatkhau.class);
                 startActivity(intent3);
                 break;
@@ -170,30 +167,31 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
 
         return true;
     }
-    private void showUser(){
+
+    private void showUser() {
         Intent intent = getIntent();
         String ho_ten = intent.getStringExtra("hoten");
 
         //fullname.setText(ho_ten);
     }
+
     //tkb timetable get data from firebase
-    private void  GetDataFromFireBase(){
+    private void GetDataFromFireBase() {
         String date = txtThangnNam.getText().toString().trim();
         //String sdtdn = MainActivity.sdt.toString().trim();
         Query query = reference.orderByChild("date").equalTo(date);
-
-
+        String sdtmain = MainActivity.sdt;
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     //String TimeTable = dataSnapshot.getKey();
                     String key = dataSnapshot.getKey();
                     String sdt = snapshot.child(key).child("sdt").getValue(String.class);
                     //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
-                   // if (sdtdn == sdt) {
+                    // if (sdtdn == sdt) {
 
-                    if (snapshot.hasChildren()) {
+                    if (snapshot.exists() && sdtmain.equals(sdt)) {
                         //String key = dataSnapshot.getKey();
                         String title = snapshot.child(key).child("title").getValue(String.class);
                         String location = snapshot.child(key).child("location").getValue(String.class);
@@ -212,8 +210,12 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                     }
                     //}
                 }
-                adapter = new RecyclerViewTimeTable(getApplicationContext(),list);
-               recyclerView.setAdapter(adapter);
+                recyclerView = findViewById(R.id.recyclerView);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Giaodien_trangchu.this);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                adapter = new RecyclerViewTimeTable(getApplicationContext(), list);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 

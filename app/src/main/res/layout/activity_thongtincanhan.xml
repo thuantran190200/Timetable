@@ -80,8 +80,9 @@
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bungee"
                         android:includeFontPadding="false"
-                        android:text="Thành tựu"
-                        android:textSize="20sp" />
+                        android:text="Số Môn Thêm"
+                        android:textSize="18sp"
+                        android:padding="10dp"/>
 
                     <TextView
                         android:id="@+id/diem"
@@ -121,8 +122,9 @@
                         android:layout_centerInParent="true"
                         android:fontFamily="@font/bungee"
                         android:includeFontPadding="false"
-                        android:text="Sách"
-                        android:textSize="20sp" />
+                        android:text="Hoạt động"
+                        android:textSize="18sp"
+                        android:padding="10dp"/>
 
                     <TextView
                         android:id="@+id/soluong"

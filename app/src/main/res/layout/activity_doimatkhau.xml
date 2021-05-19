@@ -10,8 +10,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="80dp"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/bungee"
         android:text="Đổi mật khẩu"/>
     <EditText
         android:id="@+id/tendangnhap"
