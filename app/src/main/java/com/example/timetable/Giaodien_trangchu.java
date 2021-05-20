@@ -88,7 +88,6 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
 
                 txtThangnNam.setText(date);
 
-                gridView = findViewById(R.id.gridview);
                 reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
                 //đặt if xét điều kiện tài khoản ở đây
                 GetDataFromFireBase();

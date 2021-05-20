@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/event_item_time"
+        android:layout_marginTop="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingEnd="16dp"
@@ -69,22 +70,4 @@
         android:text="12:00"
         android:textStyle="bold"
         android:layout_toRightOf="@id/event_item_color_bar2"/>
-
-    <TextView
-        android:id="@+id/event_item_title_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_toEndOf="@id/event_item_time_end"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingEnd="16dp"
-        android:textSize="17dp"
-        android:text="Tên môn học"
-        android:layout_toRightOf="@id/event_item_time_end"
-        android:paddingRight="16dp"
-        android:layout_marginLeft="16dp"/>
-
-
 </RelativeLayout>

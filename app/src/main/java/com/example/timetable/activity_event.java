@@ -213,23 +213,87 @@ public class activity_event extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public boolean batloitenmon() {
+        event_title = findViewById(R.id.event_title);
+        String tenmon = event_title.getText().toString().trim();
+        if (tenmon.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để tên môn trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean batloisophong() {
+        event_location = findViewById(R.id.event_location);
+        String sophong = event_location.getText().toString().trim();
+        if (sophong.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để số phòng trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean batloitietbd() {
+        event_tietbd = findViewById(R.id.event_tietbd);
+        String tietbd = event_location.getText().toString().trim();
+        if (tietbd.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để tiết bắt đầu trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean batloisotiet() {
+        event_sotiet = findViewById(R.id.event_sotiet);
+        String sotiet = event_sotiet.getText().toString().trim();
+        if (sotiet.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để số tiết học trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean batloisongaybd() {
+        event_date = findViewById(R.id.event_date);
+        String ngaybd = event_date.getText().toString().trim();
+        if (ngaybd.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để ngày bắt đầu trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean batloitgbd() {
+        event_time = findViewById(R.id.event_time);
+        String tgbd = event_time.getText().toString().trim();
+        if (tgbd.isEmpty()) {
+            Toast.makeText(activity_event.this, "Không để thời gian bắt đầu trống", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //thêm sự kiện môn vào
-        if (item.getItemId() == R.id.check) {
-            if (!isCheck) {
-                event_date.getText();
-                String key = reference.push().getKey();
-                //Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                TimeTable timeTable = new TimeTable(key, event_title.getText().toString(), event_location.getText().toString(), event_tietbd.getText().toString(),
-                        event_sotiet.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(),
-                        event_date_end.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(),MainActivity.sdt);
-                reference.child(key).setValue(timeTable);
-                this.finish();
-                Toast.makeText(activity_event.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
+        if (batloitenmon() && batloisophong() && batloitietbd() && batloisotiet() && batloisongaybd() && batloitgbd()) {
+            if (item.getItemId() == R.id.check) {
+
+                if (!isCheck) {
 
 
-            } else {
+                    event_date.getText();
+                    String key = reference.push().getKey();
+                    //Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
+                    TimeTable timeTable = new TimeTable(key, event_title.getText().toString(), event_location.getText().toString(), event_tietbd.getText().toString(),
+                            event_sotiet.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(),
+                            event_date_end.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(), MainActivity.sdt);
+                    reference.child(key).setValue(timeTable);
+                    this.finish();
+                    Toast.makeText(activity_event.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
+
+
+                } else {
                     reference.child(id).child("title").setValue(event_title.getText().toString().trim());
                     reference.child(id).child("location").setValue(event_location.getText().toString().trim());
                     reference.child(id).child("tietbd").setValue(event_tietbd.getText().toString().trim());
@@ -244,6 +308,7 @@ public class activity_event extends AppCompatActivity {
 
                     this.finish();
                     Toast.makeText(activity_event.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         //xóa 1 sự kiện môn đã thêm vào
