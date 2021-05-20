@@ -4,33 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Lichsu_TKB"
-    android:orientation="vertical">
+    tools:context=".Hoatdong"
+    android:orientation="vertical"
+    android:background="@drawable/work1">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:background="@color/yellow">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Lịch sử thêm môn" />
+            app:title="Thêm công việc cần thực hiện"
+            app:titleTextColor="@color/black"
+            android:background="@color/yellow"/>
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewhistory"
+            android:id="@+id/recyclerViewhistory1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <ImageButton
-            android:id="@+id/imbPlus1"
+            android:id="@+id/imbPlus2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"

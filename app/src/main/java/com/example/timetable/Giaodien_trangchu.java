@@ -150,6 +150,10 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 Intent intent2 = new Intent(Giaodien_trangchu.this, Lichsu_TKB.class);
                 startActivity(intent2);
                 break;
+            case R.id.nav_hoatdong:
+                Intent intent5 = new Intent(Giaodien_trangchu.this, Hoatdong.class);
+                startActivity(intent5);
+                break;
             case R.id.nav_change:
                 Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
                 sessionmanager.logoutUser();

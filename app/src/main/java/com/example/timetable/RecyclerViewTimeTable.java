@@ -23,8 +23,8 @@ public class RecyclerViewTimeTable extends RecyclerView.Adapter<RecyclerViewTime
         this.list = list;
     }
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timetable, parent, false);
-        return new RecyclerViewTimeTable.ViewHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timetable, parent, false);
+            return new RecyclerViewTimeTable.ViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
@@ -53,7 +53,7 @@ public class RecyclerViewTimeTable extends RecyclerView.Adapter<RecyclerViewTime
     }
     @Override
     public int getItemCount(){return list.size();}
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView event_item_color_bar;
         TextView event_item_time,event_item_title;
         RelativeLayout event_item_holder;
