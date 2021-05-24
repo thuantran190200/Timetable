@@ -21,8 +21,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
@@ -51,7 +57,6 @@ public class Them_cv_tkb extends AppCompatActivity {
         event_description = findViewById(R.id.event_description);
         event_date = findViewById(R.id.event_date);
         event_time = findViewById(R.id.event_time);
-        event_date_end = findViewById(R.id.event_dateend);
         event_time_end = findViewById(R.id.event_timeend);
         event_reminder = findViewById(R.id.event_reminder);
         toolbar = findViewById(R.id.toolbar);
@@ -65,7 +70,7 @@ public class Them_cv_tkb extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
-        reference = FirebaseDatabase.getInstance().getReference().child("Working");
+        reference = FirebaseDatabase.getInstance().getReference().child("Work");
         loadData();
         event_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +116,26 @@ public class Them_cv_tkb extends AppCompatActivity {
                         }, 12, 0, false
                 );
                 timePickerDialog.updateTime(t1hour, t1minute);
+                timePickerDialog.show();
+            }
+        });
+        event_time_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
+                        Them_cv_tkb.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                t2hour = hourOfDay;
+                                t2minute = minute;
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(0, 0, 0, t2hour, t2minute);
+                                event_time_end.setText(DateFormat.format("kk:mm", calendar));
+                            }
+                        }, 12, 0, false
+                );
+                timePickerDialog.updateTime(t2hour, t2minute);
                 timePickerDialog.show();
             }
         });
@@ -186,20 +211,13 @@ public class Them_cv_tkb extends AppCompatActivity {
         //thêm sự kiện môn vào
         if (batloitenmon() && batloisophong() && batloisongaybd() && batloitgbd()) {
             if (item.getItemId() == R.id.check) {
-
                 if (!isCheck) {
-
-
                     event_date.getText();
                     String key = reference.push().getKey();
-                    //Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
-                    TimeTable timeTable = new TimeTable(key, event_title.getText().toString(), event_location.getText().toString(), "",
-                            "", event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(),
-                            event_date_end.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(), MainActivity.sdt);
-                    reference.child(key).setValue(timeTable);
+                    Work work = new Work(key, event_title.getText().toString(), event_location.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(), MainActivity.sdt);
+                    reference.child(key).setValue(work);
                     this.finish();
                     Toast.makeText(Them_cv_tkb.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
-
 
                 } else {
                     reference.child(id).child("title").setValue(event_title.getText().toString().trim());
@@ -211,7 +229,6 @@ public class Them_cv_tkb extends AppCompatActivity {
                     reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
                     reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
                     reference.child(id).child("sdt").setValue(MainActivity.sdt);
-
                     this.finish();
                     Toast.makeText(Them_cv_tkb.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
                 }
@@ -219,22 +236,35 @@ public class Them_cv_tkb extends AppCompatActivity {
         }
         //xóa 1 sự kiện môn đã thêm vào
         if (item.getItemId() == R.id.trash) {
+            Query query = reference.orderByChild("id").equalTo(id);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            ds.getRef().removeValue();
+                        }
+                        Toast.makeText(Them_cv_tkb.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
     private void loadData() {
-        if (isCheck == true) {
+        if (isCheck) {
             Intent intent = getIntent();
             id = intent.getStringExtra("id");
             event_title.setText(intent.getStringExtra("title"));
             event_location.setText(intent.getStringExtra("location"));
-            //event_tietbd.setText(intent.getStringExtra("tietbd"));
-            //event_sotiet.setText(intent.getStringExtra("sotiet"));
             event_description.setText(intent.getStringExtra("description"));
             event_date.setText(intent.getStringExtra("date"));
             event_time.setText(intent.getStringExtra("time"));
-            event_date_end.setText(intent.getStringExtra("date_end"));
             event_time_end.setText(intent.getStringExtra("time_end"));
             event_reminder.setText(intent.getStringExtra("reminder"));
         }

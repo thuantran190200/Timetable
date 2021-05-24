@@ -14,35 +14,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerViewTimeTable extends RecyclerView.Adapter<RecyclerViewTimeTable.ViewHolder>{
+public class RecyclerViewWork extends RecyclerView.Adapter<RecyclerViewWork.ViewHolder>{
     @NonNull
     private Context mContext;
-    ArrayList<TimeTable> list;
-    public RecyclerViewTimeTable(Context mContext, ArrayList<TimeTable> list){
+    ArrayList<Work> list;
+    public RecyclerViewWork(Context mContext, ArrayList<Work> list){
         this.mContext = mContext;
         this.list = list;
     }
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timetable, parent, false);
-            return new RecyclerViewTimeTable.ViewHolder(view);
+    public RecyclerViewWork.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_timetable_couple, parent, false);
+        return new RecyclerViewWork.ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position){
+    public void onBindViewHolder(@NonNull RecyclerViewWork.ViewHolder holder, int position){
         holder.event_item_time.setText(list.get(position).getTime());
+        holder.event_item_time_end.setText(list.get(position).getTime_end());
         holder.event_item_title.setText(list.get(position).getTitle());
-        holder.event_item_holder.setOnClickListener(new View.OnClickListener() {
+        holder.event_item_holder_couple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,activity_event.class);
+                Intent intent = new Intent(mContext,Them_cv_tkb.class);
                 intent.putExtra("id",list.get(position).getId());
                 intent.putExtra("title",list.get(position).getTitle());
                 intent.putExtra("location",list.get(position).getLocation());
                 intent.putExtra("description",list.get(position).getDescription());
-                intent.putExtra("tietbd",list.get(position).getTietbd());
-                intent.putExtra("sotiet",list.get(position).getSotiet());
                 intent.putExtra("date",list.get(position).getDate());
                 intent.putExtra("time",list.get(position).getTime());
-                intent.putExtra("date_end",list.get(position).getDate_end());
                 intent.putExtra("time_end",list.get(position).getTime_end());
                 intent.putExtra("reminder",list.get(position).getReminder());
                 activity_event.isCheck = true;
@@ -55,14 +53,13 @@ public class RecyclerViewTimeTable extends RecyclerView.Adapter<RecyclerViewTime
     @Override
     public int getItemCount(){return list.size();}
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView event_item_color_bar;
-        TextView event_item_time,event_item_title;
-        RelativeLayout event_item_holder;
+        TextView event_item_time,event_item_title,event_item_time_end;
+        RelativeLayout event_item_holder_couple;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            event_item_holder = itemView.findViewById(R.id.event_item_holder);
-            event_item_color_bar = itemView.findViewById(R.id.event_item_color_bar);
+            event_item_holder_couple = itemView.findViewById(R.id.event_item_holder_couple);
             event_item_time = itemView.findViewById(R.id.event_item_time);
+            event_item_time_end = itemView.findViewById(R.id.event_item_time_end);
             event_item_title = itemView.findViewById(R.id.event_item_title);
         }
     }

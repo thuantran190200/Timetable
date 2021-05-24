@@ -26,8 +26,14 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -313,7 +319,23 @@ public class activity_event extends AppCompatActivity {
         }
         //xóa 1 sự kiện môn đã thêm vào
         if (item.getItemId() == R.id.trash) {
+            Query query = reference.orderByChild("id").equalTo(id);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            ds.getRef().removeValue();
+                        }
+                        Toast.makeText(activity_event.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
@@ -341,4 +363,5 @@ public class activity_event extends AppCompatActivity {
             event_reminder.setText(intent.getStringExtra("reminder"));
         }
     }
+
 }
