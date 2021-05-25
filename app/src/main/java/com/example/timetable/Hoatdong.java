@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class Hoatdong extends AppCompatActivity {
+
     ArrayList<Work> list = new ArrayList<>();
     RecyclerViewWork adapter;
     RecyclerView recyclerView1;
@@ -31,8 +33,10 @@ public class Hoatdong extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoatdong);
 
+
         imbPlus2 = findViewById(R.id.imbPlus2);
         GetDataFromFireBase1();
+
         imbPlus2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +73,10 @@ public class Hoatdong extends AppCompatActivity {
                     }
                 }
                 recyclerView1 = findViewById(R.id.recyclerViewhistory1);
-                recyclerView1.setHasFixedSize(true);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Hoatdong.this);
                 adapter = new RecyclerViewWork(getApplicationContext(), list);
                 recyclerView1.setLayoutManager(layoutManager);
+                recyclerView1.setHasFixedSize(true);
                 recyclerView1.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }

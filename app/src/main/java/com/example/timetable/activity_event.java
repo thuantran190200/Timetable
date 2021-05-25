@@ -52,7 +52,6 @@ public class activity_event extends AppCompatActivity {
     String selected = "Không nhắc nhở";
     DatabaseReference reference;
     String id, sdt;
-    //
     DatePickerDialog.OnDateSetListener setListener;
     public static boolean isCheck = false;
 
@@ -86,6 +85,7 @@ public class activity_event extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference().child("TimeTable");
         loadData();
+
 //        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 //            @Override
 //            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -278,26 +278,20 @@ public class activity_event extends AppCompatActivity {
         }
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //thêm sự kiện môn vào
         if (batloitenmon() && batloisophong() && batloitietbd() && batloisotiet() && batloisongaybd() && batloitgbd()) {
             if (item.getItemId() == R.id.check) {
-
                 if (!isCheck) {
-
-
                     event_date.getText();
                     String key = reference.push().getKey();
-                    //Sessionmanager sessionmanager = new Sessionmanager(getApplicationContext(), Sessionmanager.SESSION_USER);
                     TimeTable timeTable = new TimeTable(key, event_title.getText().toString(), event_location.getText().toString(), event_tietbd.getText().toString(),
                             event_sotiet.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(),
                             event_date_end.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(), MainActivity.sdt);
                     reference.child(key).setValue(timeTable);
                     this.finish();
                     Toast.makeText(activity_event.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
-
 
                 } else {
                     reference.child(id).child("title").setValue(event_title.getText().toString().trim());

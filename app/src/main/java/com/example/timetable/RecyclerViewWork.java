@@ -43,7 +43,7 @@ public class RecyclerViewWork extends RecyclerView.Adapter<RecyclerViewWork.View
                 intent.putExtra("time",list.get(position).getTime());
                 intent.putExtra("time_end",list.get(position).getTime_end());
                 intent.putExtra("reminder",list.get(position).getReminder());
-                activity_event.isCheck = true;
+                Them_cv_tkb.isCheck1 = true;
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
@@ -53,11 +53,13 @@ public class RecyclerViewWork extends RecyclerView.Adapter<RecyclerViewWork.View
     @Override
     public int getItemCount(){return list.size();}
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView event_item_color_bar;
         TextView event_item_time,event_item_title,event_item_time_end;
         RelativeLayout event_item_holder_couple;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             event_item_holder_couple = itemView.findViewById(R.id.event_item_holder_couple);
+            event_item_color_bar = itemView.findViewById(R.id.event_item_color_bar);
             event_item_time = itemView.findViewById(R.id.event_item_time);
             event_item_time_end = itemView.findViewById(R.id.event_item_time_end);
             event_item_title = itemView.findViewById(R.id.event_item_title);

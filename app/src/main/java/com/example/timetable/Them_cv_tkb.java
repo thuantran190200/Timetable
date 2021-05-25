@@ -42,9 +42,8 @@ public class Them_cv_tkb extends AppCompatActivity {
     String selected = "Không nhắc nhở";
     DatabaseReference reference;
     String id, sdt;
-    //
     DatePickerDialog.OnDateSetListener setListener;
-    public static boolean isCheck = false;
+    public static boolean isCheck1 = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +58,7 @@ public class Them_cv_tkb extends AppCompatActivity {
         event_time = findViewById(R.id.event_time);
         event_time_end = findViewById(R.id.event_timeend);
         event_reminder = findViewById(R.id.event_reminder);
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar1);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -160,7 +159,7 @@ public class Them_cv_tkb extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (isCheck) {
+        if (isCheck1) {
             getMenuInflater().inflate(R.menu.custom_menu_trash, menu);
         } else {
             getMenuInflater().inflate(R.menu.custom_menu, menu);
@@ -187,6 +186,7 @@ public class Them_cv_tkb extends AppCompatActivity {
         }
         return true;
     }
+
     public boolean batloisongaybd() {
         event_date = findViewById(R.id.event_date);
         String ngaybd = event_date.getText().toString().trim();
@@ -211,10 +211,12 @@ public class Them_cv_tkb extends AppCompatActivity {
         //thêm sự kiện môn vào
         if (batloitenmon() && batloisophong() && batloisongaybd() && batloitgbd()) {
             if (item.getItemId() == R.id.check) {
-                if (!isCheck) {
+                if (!isCheck1) {
                     event_date.getText();
                     String key = reference.push().getKey();
-                    Work work = new Work(key, event_title.getText().toString(), event_location.getText().toString(), event_description.getText().toString(), event_date.getText().toString(), event_time.getText().toString(), event_time_end.getText().toString(), event_reminder.getText().toString(), MainActivity.sdt);
+                    Work work = new Work(key, event_title.getText().toString(), event_location.getText().toString(), event_description.getText().toString(),
+                            event_date.getText().toString(), event_time.getText().toString(), event_time_end.getText().toString(),
+                            event_reminder.getText().toString(), MainActivity.sdt);
                     reference.child(key).setValue(work);
                     this.finish();
                     Toast.makeText(Them_cv_tkb.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
@@ -225,10 +227,10 @@ public class Them_cv_tkb extends AppCompatActivity {
                     reference.child(id).child("description").setValue(event_description.getText().toString().trim());
                     reference.child(id).child("date").setValue(event_date.getText().toString().trim());
                     reference.child(id).child("time").setValue(event_time.getText().toString().trim());
-                    reference.child(id).child("date_end").setValue(event_date_end.getText().toString().trim());
                     reference.child(id).child("time_end").setValue(event_time_end.getText().toString().trim());
                     reference.child(id).child("reminder").setValue(event_reminder.getText().toString().trim());
                     reference.child(id).child("sdt").setValue(MainActivity.sdt);
+
                     this.finish();
                     Toast.makeText(Them_cv_tkb.this, "Đang lưu....", Toast.LENGTH_SHORT).show();
                 }
@@ -257,7 +259,7 @@ public class Them_cv_tkb extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void loadData() {
-        if (isCheck) {
+        if (isCheck1 == true) {
             Intent intent = getIntent();
             id = intent.getStringExtra("id");
             event_title.setText(intent.getStringExtra("title"));

@@ -56,12 +56,6 @@ public class Lichsu_TKB extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //String TimeTable = dataSnapshot.getKey();
-                    //String key = dataSnapshot.getKey();
-                    //String sdt = snapshot.child(key).child("sdt").getValue(String.class);
-                    //so sánh số điện thoại người dùng và id(số điện thoại) của thời khóa biểu giống thì lấy
-                    // if (sdtdn == sdt) {
-            //
                     if (snapshot.exists()) {
                         String key = dataSnapshot.getKey();
                         String title = snapshot.child(key).child("title").getValue(String.class);

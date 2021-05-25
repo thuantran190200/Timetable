@@ -50,7 +50,6 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
     DatabaseReference reference;
     ArrayList<TimeTable> list = new ArrayList<>();
     RecyclerViewTimeTable adapter;
-    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
