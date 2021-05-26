@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/SkyBlue">
+    android:background="@color/DarkKhaki">
 
     <ImageView
         android:id="@+id/imageview"
@@ -31,7 +31,7 @@
         android:fontFamily="@font/bangers"
         android:gravity="center"
         android:text="@string/timetable"
-        android:textColor="@color/Yellow"
+        android:textColor="@color/Black"
         android:textSize="70sp"
         android:transitionName="logo_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,9 +46,10 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/antic"
         android:gravity="center"
-        android:textColor="@color/OrangeRed"
+        android:textColor="@color/Yellow"
         android:text="@string/s_ho_n_h_o_t_c_t_ng_ch_t_m_t"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +62,8 @@
         android:layout_marginTop="11dp"
         android:fontFamily="@font/antic"
         android:gravity="center"
-        android:textColor="@color/OrangeRed"
+        android:textStyle="bold"
+        android:textColor="@color/Yellow"
         android:text="@string/n_c_n_b_n_tay_c_a_th_i_gian"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

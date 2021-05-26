@@ -28,11 +28,11 @@ public class Hoatdong extends AppCompatActivity {
     ImageButton imbPlus2;
     DatabaseReference reference;
 
+    private int notificationId =1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoatdong);
-
 
         imbPlus2 = findViewById(R.id.imbPlus2);
         GetDataFromFireBase1();

@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +36,8 @@ import java.util.Calendar;
 
 public class Them_cv_tkb extends AppCompatActivity {
 
+    private int notificationId = 1;
+
     int t1hour, t1minute, t2hour, t2minute;
     EditText event_title, event_description, event_location;
     TextView event_date, event_date_end, event_time, event_time_end, event_reminder;
@@ -44,6 +48,7 @@ public class Them_cv_tkb extends AppCompatActivity {
     String id, sdt;
     DatePickerDialog.OnDateSetListener setListener;
     public static boolean isCheck1 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,10 @@ public class Them_cv_tkb extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         reference = FirebaseDatabase.getInstance().getReference().child("Work");
         loadData();
+        //
+
+
+        //
         event_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +107,8 @@ public class Them_cv_tkb extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+
         event_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,11 +122,15 @@ public class Them_cv_tkb extends AppCompatActivity {
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.set(0, 0, 0, t1hour, t1minute);
                                 event_time.setText(DateFormat.format("kk:mm", calendar));
+
                             }
                         }, 12, 0, false
                 );
                 timePickerDialog.updateTime(t1hour, t1minute);
                 timePickerDialog.show();
+
+
+
             }
         });
         event_time_end.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +172,7 @@ public class Them_cv_tkb extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (isCheck1) {
@@ -206,19 +222,47 @@ public class Them_cv_tkb extends AppCompatActivity {
         }
         return true;
     }
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //thêm sự kiện môn vào
+
+
+        //thêm sự kiện môn vàop
         if (batloitenmon() && batloisophong() && batloisongaybd() && batloitgbd()) {
             if (item.getItemId() == R.id.check) {
                 if (!isCheck1) {
                     event_date.getText();
                     String key = reference.push().getKey();
+
                     Work work = new Work(key, event_title.getText().toString(), event_location.getText().toString(), event_description.getText().toString(),
                             event_date.getText().toString(), event_time.getText().toString(), event_time_end.getText().toString(),
                             event_reminder.getText().toString(), MainActivity.sdt);
+
                     reference.child(key).setValue(work);
                     this.finish();
+                    // Intent
+                    Intent intent = new Intent(Them_cv_tkb.this, AlarmReceiver.class);
+                    intent.putExtra("notificationId", notificationId);
+                    intent.putExtra("message", event_description.getText().toString());
+
+                    // PendingIntent
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                            Them_cv_tkb.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT
+                    );
+
+                    // AlarmManager
+                    AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                    // Create time.
+                    Calendar startTime = Calendar.getInstance();
+                    startTime.set(Calendar.HOUR_OF_DAY, 23);
+                    startTime.set(Calendar.MINUTE, 05);
+                    startTime.set(Calendar.SECOND, 0);
+                    long alarmStartTime = startTime.getTimeInMillis();
+
+                    // Set Alarm
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmStartTime, pendingIntent);
+                    Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
                     Toast.makeText(Them_cv_tkb.this, "Tạo thành công", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -250,6 +294,7 @@ public class Them_cv_tkb extends AppCompatActivity {
                         finish();
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
@@ -258,6 +303,7 @@ public class Them_cv_tkb extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void loadData() {
         if (isCheck1 == true) {
             Intent intent = getIntent();
