@@ -164,6 +164,10 @@ public class Giaodien_trangchu extends AppCompatActivity implements NavigationVi
                 Intent intent3 = new Intent(Giaodien_trangchu.this, Doimatkhau.class);
                 startActivity(intent3);
                 break;
+            case R.id.nav_note:
+                Intent intent6 = new Intent(Giaodien_trangchu.this, Ghichu.class);
+                startActivity(intent6);
+                break;
 
         }
 

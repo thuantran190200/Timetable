@@ -33,12 +33,12 @@ public class RecyclerViewNote extends RecyclerView.Adapter<RecyclerViewNote.View
         holder.event_item_holder_note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,Them_cv_tkb.class);
+                Intent intent = new Intent(mContext,event_Note.class);
                 intent.putExtra("id",list.get(position).getId());
                 intent.putExtra("title",list.get(position).getTitle());
                 intent.putExtra("description",list.get(position).getDescription());
                 intent.putExtra("date",list.get(position).getDate());
-                event_Note.isCheck1 = true;
+                event_Note.isCheck2 = true;
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
