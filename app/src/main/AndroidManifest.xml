@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timetable">
-        <activity android:name=".Hoatdong"></activity>
+        <activity android:name=".event_Note"></activity>
+        <activity android:name=".Hoatdong" />
         <activity android:name=".Doimatkhau" />
         <activity android:name=".Lichsu_TKB" />
         <activity android:name=".activity_event" />
